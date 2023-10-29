@@ -1,7 +1,7 @@
 {
     "type": "code",
     "modid": "dhyp",
-    "name": "Dont Hit Your Pet",
+    "name": "Dont Hit Your Pets",
     "authors": ["XurxoMF"],
     "side": "server",
     "description": "Tired of hiting your pets? Say no more, players can't hit pets anymore!",
