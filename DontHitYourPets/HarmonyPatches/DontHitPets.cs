@@ -1,6 +1,8 @@
 using HarmonyLib;
 using PetAI;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
+using Vintagestory.API.MathTools;
 
 namespace DontHitYourPets.HarmonyPatches
 {
@@ -16,6 +18,34 @@ namespace DontHitYourPets.HarmonyPatches
                 __result = false;
                 return false;
             }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(ItemPetWhistle), "notifyNearbyPets")]
+    public static class DontTargetYourPets
+    {
+        private static bool Prefix(ItemPetWhistle __instance, EntityAgent byEntity)
+        {
+            var giveBehavior = byEntity.GetBehavior<EntityBehaviorGiveCommand>();
+            if (giveBehavior == null) return false;
+
+            var command = giveBehavior.activeCommand;
+            if (command == null) return false;
+
+            if (byEntity is EntityPlayer player && command.commandName == "settarget")
+            {
+                EntitySelection entitySel = null;
+                BlockSelection blockSel = null;
+                Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
+                player.World.RayTraceForSelection(pos, player.SidedPos.Pitch, player.SidedPos.Yaw, 50, ref blockSel, ref entitySel);
+
+                if (entitySel?.Entity is EntityPet pet && pet.GetBehavior<EntityBehaviorTameable>().domesticationLevel != DomesticationLevel.WILD)
+                {
+                    return false;
+                }
+            }
+
             return true;
         }
     }
