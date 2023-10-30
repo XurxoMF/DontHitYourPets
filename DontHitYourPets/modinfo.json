@@ -5,7 +5,7 @@
     "authors": ["XurxoMF"],
     "side": "server",
     "description": "Tired of hiting your pets? Say no more, players can't hit pets anymore!",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "dependencies": {
         "game": "1.18.15",
         "petai": "1.8.0"
