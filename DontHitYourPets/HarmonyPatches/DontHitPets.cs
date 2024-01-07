@@ -1,7 +1,6 @@
 using HarmonyLib;
 using PetAI;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
 
 namespace DontHitYourPets.HarmonyPatches
@@ -11,7 +10,7 @@ namespace DontHitYourPets.HarmonyPatches
     {
         public static bool Prefix(EntityPet __instance, ref bool __result, DamageSource damageSource, float damage)
         {
-            if (PetConfig.Current.pvpOff
+            if (PetConfig.Current.PvpOff
                 && __instance.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && (damageSource.CauseEntity is EntityPlayer || damageSource.SourceEntity is EntityPlayer))
             {
