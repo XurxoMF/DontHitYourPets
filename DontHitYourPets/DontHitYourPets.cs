@@ -8,8 +8,6 @@ namespace DontHitYourPets
     {
         public static Harmony HarmonyInstance { get; set; } = new Harmony("dhyp");
 
-        public override bool AllowRuntimeReload => true;
-
         public override bool ShouldLoad(EnumAppSide side)
         {
             if (side == EnumAppSide.Server) return true;
